@@ -8,8 +8,8 @@
 #       2018/06/21  renfeng.zhang   0.1.0
 #
 # Usage:
-#   1. 使用curl安装: bash -c "$(curl -fsSL https://github.com/zhangrenfeng/aptkit)"
-#   2. 使用wget安装: bash -c "$(wget 地址 -O -)"
+#   1. 使用curl安装: bash -c "$(curl -fsSL https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh)"
+#   2. 使用wget安装: bash -c "$(wget https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh -O -)"
 #   3. 本地安装: 将该工程下载到本地, 然后进入该文件所在的目录, 执行命令:
 
 # 初始化环境变量
@@ -112,6 +112,33 @@ function install_config()
     git config --global commit.template "$INSTALL_PATH/$CONFIG/$TEMPLATE_FILES"
 }
 
+# 安装命令
+function install_command()
+{
+    echo "Insall git command..."
+
+    mkdir -p $COMMAND_PATH_PREFIX
+
+    for scriptFile in "${SCRIPT_FILES[@]}"; do
+        ln -s "$INSTALL_PATH/$COMMAND/$scriptFile" "$COMMAND_PATH_PREFIX/$scriptFile" > /dev/null 2>&1 || echo "$COMMAND_PATH_PREFIX/$scriptFile installed"
+    done
+
+    ln -s "$INSTALL_PATH/git/install.sh" "$COMMAND_PATH_PREFIX/gitkit" > /dev/null 2>&1 || echo "$COMMAND_PATH_PREFIX/$REPO_NAME installed."
+}
+
+# 安装配置
+function install_config()
+{
+    echo "Install git config..."
+
+    ALIAS=`git config --list | grep 'alias.ci'`
+    if [[ -n "$ALIAS" ]]; then
+        git config --global --unset alias.ci
+    fi
+
+    git config --global commit.template "$INSTALL_PATH/$CONFIG/$TEMPLATE_FILES"
+}
+
 # 安装钩子
 function install_hooks()
 {
@@ -151,7 +178,6 @@ function help()
 {
     echo "Usage: gitkit [install|uninstall|update|help]"
 }
-
 # 安装
 function install()
 {
@@ -186,7 +212,7 @@ function main()
     welcome
 
     # 获取系统信息, 并进行初始化操作
-    uname -a | egrep -i linux && { [ `id -u` -eq 0 ] && init || { echo "Please use the command 'sudo bash -c ...'" && exit 0 } } || init
+    uname -a | egrep -i linux && { [ `id -u` -eq 0 ] && init || { echo "Please  sudo  bash installer.sh " && exit 0; } ;} || init
 
     case $1 in
         uninstall )
@@ -211,4 +237,3 @@ function main()
 }
 
 main "$@"
-

@@ -131,8 +131,8 @@ function run()
 {
     GIT_COMMIT_COMMAND="git commit -F $COMMIT_MESSAGE_FILE $ALL"
 
-    #echo $GIT_COMMIT_COMMAND
-    eval $GIT_COMMIT_COMMAND > /dev/null 2>&1
+    echo $GIT_COMMIT_COMMAND
+    eval $GIT_COMMIT_COMMAND
     if [[ $? -ne 0 ]]; then
       echo ""
       branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
@@ -147,20 +147,14 @@ function clean()
     rm -f $COMMIT_MESSAGE_FILE
 }
 
-# 主程序
-function main()
-{
-    case $1 in
-      * )
-        init
-        verify
-        mainMessage
-        otherMessage
-        build "$@"
-        run
-        clean
-        ;;
-  esac
-}
-
-main
+case $1 in
+  * )
+    init
+    verify
+    mainMessage
+    otherMessage
+    build "$@"
+    run
+    clean
+    ;;
+esac
