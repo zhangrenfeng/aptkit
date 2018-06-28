@@ -216,6 +216,7 @@ function main()
 
     case $1 in
         uninstall )
+            echo "uninstall"
             uninstall
             ;;
 
