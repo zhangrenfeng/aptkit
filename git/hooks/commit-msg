@@ -55,10 +55,11 @@ COMMIT_MESSAGE_TEMPLATE="type(<scope>): <subject>
 #         3. 也可以包括JIRA issue references或者其他actions.
 "
 
-COMMENT_PATTERN='^$'
+COMMENT_PATTERN='^#'
 REFERENCE_PATTERN='^\[[[:digit:]]\]'
 
 LINE_NUMBER=0
+echo "1234567890"
 while IFS= read -r line || [[ -n "$line" ]];
 do
     [[ $line =~ $COMMENT_PATTERN ]] && continue
