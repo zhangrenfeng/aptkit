@@ -6,8 +6,8 @@ function init()
     LOCALE=(LANG LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LC_ALL)
     LANGUAGE="zh_CN.UTF-8"
 
-    for local in "${LOCALE[@]}"; do
-        export "$locale=$LANGUAGE"
+    for loc in "${LOCALE[@]}"; do
+        export "$loc=$LANGUAGE"
     done
 
     # commit类型
