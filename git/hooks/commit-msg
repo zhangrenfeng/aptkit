@@ -1,0 +1,92 @@
+#!/bin/bash
+# 参考链接: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+# commit-msg钩子有一个参数, 即保存开发者提交的commit信息的暂存文件地址, 如果commit-msg脚本返回非零,
+# Git会abort commit进程, 所以在允许commit通过之前可以使用commit-msg钩子来验证工程的状态或者commit信息.
+
+RESULT_CODE=0
+
+# 输出错误信息
+function errorMsg()
+{
+    printf -- "- $*\n" >&2
+    RESULT_CODE=1
+}
+
+# commit类型
+TYPE=(":sparkles: feature" \
+      ":bug: fix" \
+      ":ambulance: hotfix" \
+      ":white_check_mark: test" \
+      ":recycle: refactor" \
+      ":zap: performance" \
+      ":ok_hand: review" \
+      ":fire: removing" \
+      ":wrench: configuration" \
+      ":memo: docs" \
+      ":art: style")
+
+# commit消息模板
+COMMIT_MESSAGE_TEMPLATE="type(<scope>): <subject>
+
+<body>
+
+<footer>
+
+# type 字段包含:
+#  1. feature:       新功能 (Introducing new features)
+#  2. fix:           修复bug (Fixing a bug)
+#  3. hotfix:        紧急热修复 (Critical hotfix)
+#  4. test:          增加测试 (Adding tests)
+#  5. refactor:      重构 (Refactoring code)
+#  6. performance:   性能优化 (Improving performance)
+#  7. review:        代码review修改 (Updating code due to code review changes)
+#  8. removing:      删除文件或代码 (Removing code or files)
+#  9. configuration: 修改配置文件 (Changing configuration files)
+# 10. docs:          文档 (Writing docs)
+# 11. style:         格式化 (Improving structure / format of the code)
+
+# scope   用于说明 commit 影响的范围，比如数据层、控制层、视图层等等。
+# subject 是 commit 目的的简短描述，不超过50个字符
+# body    部分是对本次 commit 的详细描述，可以分成多行
+# footer  用来关闭 Issue 或 以Backlog开头，后面是对变动的描述、以及变动理由和迁移方法
+#         1. 如果当前代码与上一个版本不兼容，则 Footer 部分以BREAKING CHANGE开头，
+#            后面是对变动的描述、以及变动理由和迁移方法。
+#         2. 关闭 Issue
+#         3. 也可以包括JIRA issue references或者其他actions.
+"
+
+COMMENT_PATTERN='^$'
+REFERENCE_PATTERN='^\[[[:digit:]]\]'
+
+LINE_NUMBER=0
+while IFS= read -r line [[ -n "$line" ]];
+do
+    [[ $line =~ $COMMENT_PATTERN ]] && continue
+    [[ $line =~ $REFERENCE_PATTERN ]] && continue
+
+    LINE_NUMBER=$(($LINE_NUMBER+1))
+
+    length=$(#line)
+    if [[ $LINE_NUMBER -eq 1 ]]; then
+        TYPE_NUMBER=0
+        for type in ${TYPE[@]}; do
+            if [[ (-z `echo $line | egrep -i "^$type"`) ]]; then
+                TYPE_NUMBER=$(($TYPE_NUMBER+1))
+            fi
+        done
+        if [[ $TYPE_NUMBER -eq ${#TYPE[@]} ]]; then
+            errorMsg "Commit messgae format is incorrect!\n- Does not match '<type>(<scope>): <subject>' ! \n- $line\n"
+            printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+            printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
+            printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+        fi
+    elif [[ $LINE_NUMBER -eq 2 ]]; then
+        if [[ $length -eq 0 ]]; then
+            errorMsg "subject line followed by non-empty line\n- $line"
+        fi
+    elif [[ $length -gt 200 ]]; then
+        errorMsg "line $LINE_NUMBER exceeds 200 characters\n- $line"
+    fi
+done < "$1"
+
+exit $RESULT_CODE

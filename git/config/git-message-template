@@ -1,0 +1,26 @@
+type(<scope>): <subject>
+
+<body>
+
+<footer>
+
+# type 字段包含:
+#  1. feature:       新功能 (Introducing new features)
+#  2. fix:           修复bug (Fixing a bug)
+#  3. hotfix:        紧急热修复 (Critical hotfix)
+#  4. test:          增加测试 (Adding tests)
+#  5. refactor:      重构 (Refactoring code)
+#  6. performance:   性能优化 (Improving performance)
+#  7. review:        代码review修改 (Updating code due to code review changes)
+#  8. removing:      删除文件或代码 (Removing code or files)
+#  9. configuration: 修改配置文件 (Changing configuration files)
+# 10. docs:          文档 (Writing docs)
+# 11. style:         格式化 (Improving structure / format of the code)
+
+# scope   用于说明 commit 影响的范围，比如数据层、控制层、视图层等等。
+# subject 是 commit 目的的简短描述，不超过50个字符
+# body    部分是对本次 commit 的详细描述，可以分成多行
+# footer  用来关闭 Issue 或 以Backlog开头，后面是对变动的描述、以及变动理由和迁移方法
+#         1. 如果当前代码与上一个版本不兼容，则 Footer 部分以BREAKING CHANGE开头，后面是对变动的描述、以及变动理由和迁移方法。
+#         2. 关闭 Issue
+#         3. 也可以包括JIRA issue references或者其他actions。
