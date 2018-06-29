@@ -55,7 +55,7 @@ COMMIT_MESSAGE_TEMPLATE="type(<scope>): <subject>
 #         3. 也可以包括JIRA issue references或者其他actions.
 "
 
-COMMENT_PATTERN='^#'
+COMMENT_PATTERN='^$'
 REFERENCE_PATTERN='^\[[[:digit:]]\]'
 
 LINE_NUMBER=0
@@ -82,13 +82,14 @@ do
             printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
             printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
             printf -- "-------------------------------------------------------------------------------------------- \n" >&2
-        fi
-    elif [[ $LINE_NUMBER -eq 2 ]]; then
-        if [[ $length -eq 0 ]]; then
-            errorMsg "subject line followed by non-empty line\n- $line"
-            printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
-            printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
-            printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+        else
+           echo $line | grep -n '): ..*$'
+           if [[ "$?" -nq 0 ]]; then
+              errorMsg "subject line must followed by non-empty line\n- $line\n"
+              printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+              printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
+              printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+           fi
         fi
     elif [[ $length -gt 200 ]]; then
         errorMsg "line $LINE_NUMBER exceeds 200 characters\n- $line"

@@ -6,8 +6,8 @@ function init()
     LOCALE=(LANG LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LC_ALL)
     LANGUAGE="zh_CN.UTF-8"
 
-    for loc in "${LOCALE[@]}"; do
-        export "$loc=$LANGUAGE"
+    for locale in "${LOCALE[@]}"; do
+        export "$locale=$LANGUAGE"
     done
 
     # commit类型
@@ -147,6 +147,9 @@ function clean()
     rm -f $COMMIT_MESSAGE_FILE
 }
 
+oldIFS=$IFS
+IFS=$'\n'
+
 case $1 in
   * )
     init
@@ -158,3 +161,4 @@ case $1 in
     clean
     ;;
 esac
+IFS=$oldIFS
