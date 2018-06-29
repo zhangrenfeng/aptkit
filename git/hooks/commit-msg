@@ -84,7 +84,7 @@ do
             printf -- "-------------------------------------------------------------------------------------------- \n" >&2
         else
            echo $line | grep -n '): ..*$'
-           if [[ "$?" -nq 0 ]]; then
+           if [[ "$?" -ne 0 ]]; then
               errorMsg "subject line must followed by non-empty line\n- $line\n"
               printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
               printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
