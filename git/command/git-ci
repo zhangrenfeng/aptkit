@@ -131,7 +131,7 @@ function run()
 {
     GIT_COMMIT_COMMAND="git commit -F $COMMIT_MESSAGE_FILE $ALL"
 
-    echo $GIT_COMMIT_COMMAND
+    #echo $GIT_COMMIT_COMMAND
     eval $GIT_COMMIT_COMMAND
     if [[ $? -ne 0 ]]; then
       echo ""

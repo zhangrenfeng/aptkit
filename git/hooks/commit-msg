@@ -61,15 +61,12 @@ REFERENCE_PATTERN='^\[[[:digit:]]\]'
 LINE_NUMBER=0
 while IFS= read -r line || [[ -n "$line" ]];
 do
-    echo "line: $line"
     [[ $line =~ $COMMENT_PATTERN ]] && continue
     [[ $line =~ $REFERENCE_PATTERN ]] && continue
 
     LINE_NUMBER=$(($LINE_NUMBER+1))
 
     length=${#line}
-    echo "length: $length"
-    echo "lineNumber: $LINE_NUMBER"
     if [[ $LINE_NUMBER -eq 1 ]]; then
         TYPE_NUMBER=0
         for type in ${TYPE[@]}; do
