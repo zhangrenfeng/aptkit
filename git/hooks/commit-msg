@@ -61,12 +61,15 @@ REFERENCE_PATTERN='^\[[[:digit:]]\]'
 LINE_NUMBER=0
 while IFS= read -r line || [[ -n "$line" ]];
 do
+    echo "line: $line"
     [[ $line =~ $COMMENT_PATTERN ]] && continue
     [[ $line =~ $REFERENCE_PATTERN ]] && continue
 
     LINE_NUMBER=$(($LINE_NUMBER+1))
 
     length=${#line}
+    echo "length: $length"
+    echo "lineNumber: $LINE_NUMBER"
     if [[ $LINE_NUMBER -eq 1 ]]; then
         TYPE_NUMBER=0
         for type in ${TYPE[@]}; do
@@ -83,9 +86,15 @@ do
     elif [[ $LINE_NUMBER -eq 2 ]]; then
         if [[ $length -eq 0 ]]; then
             errorMsg "subject line followed by non-empty line\n- $line"
+            printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+            printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
+            printf -- "-------------------------------------------------------------------------------------------- \n" >&2
         fi
     elif [[ $length -gt 200 ]]; then
         errorMsg "line $LINE_NUMBER exceeds 200 characters\n- $line"
+        printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+        printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
+        printf -- "-------------------------------------------------------------------------------------------- \n" >&2
     fi
 done < "$1"
 
