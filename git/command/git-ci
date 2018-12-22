@@ -72,7 +72,7 @@ function commitType()
 # commit提示消息主体
 function mainMessage()
 {
-    echo ${YELLOW}"选择您正在提交的类型:
+    echo -e ${YELLOW}"选择您正在提交的类型:
         1. feature:       新功能 (Introducing new features)
         2. fix:           修复bug (Fixing a bug)
         3. hotfix:        紧急热修复 (Critical hotfix)
