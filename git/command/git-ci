@@ -147,7 +147,7 @@ function run()
 
     #echo $GIT_COMMIT_COMMAND
     res=$(eval $GIT_COMMIT_COMMAND)
-    echo "res=${res}"
+    echo -e ${CAYAN}"${res}"${CLOSE}
     if [[ $? -ne 0 ]]; then
       echo ""
       branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
