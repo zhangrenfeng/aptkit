@@ -3,12 +3,15 @@
 # commit-msg钩子有一个参数, 即保存开发者提交的commit信息的暂存文件地址, 如果commit-msg脚本返回非零,
 # Git会abort commit进程, 所以在允许commit通过之前可以使用commit-msg钩子来验证工程的状态或者commit信息.
 
+# echo颜色配置路径
+source ../../common/echo-color/echocolorful.sh
+
 RESULT_CODE=0
 
 # 输出错误信息
 function errorMsg()
 {
-    printf -- "- $*\n" >&2
+    echo ${RED}"- $*\n"{$CLOSE} >&2
     RESULT_CODE=1
 }
 
