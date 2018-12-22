@@ -9,7 +9,6 @@ while [ -h "$SOURCE" ]; do
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 COLOR_PATH=$(echo $DIR | sed 's/git\/command/common\/echo-color\/echocolorful.sh/')
-echo ${COLOR_PATH}
 
 # echo颜色配置路径
 source ${COLOR_PATH}
@@ -53,18 +52,18 @@ function verify()
 function commitType()
 {
     while [[ true ]]; do
-      echo "${GREEN}请选择相关数字选项${CLOSE} ${CAYAN}[0-11]${CLOSE}> \c"
+      echo -e "${GREEN}请选择相关数字选项${CLOSE} ${CAYAN}[0-11]${CLOSE}> \c"
       read -e -n 2
 
       if [[ $REPLY -ge 0 && $REPLY -le 11 ]]; then
         if [[ $REPLY -eq 0 ]]; then
-          echo ${GREEN}"退出本地提交"${CLOSE}
+          echo -e ${GREEN}"退出本地提交"${CLOSE}
           exit
         fi
         type=${TYPE[$REPLY-1]}
         break
       else
-        echo ${RED}"无效的输入, 请重新进行选择"${CLOSE} >&2
+        echo -e ${RED}"无效的输入, 请重新进行选择"${CLOSE} >&2
       fi
     done
 }
@@ -90,15 +89,15 @@ function mainMessage()
     # 获取提交的类型
     commitType
 
-    echo "${GREEN}本次提交的范围, 建议填写版本号${CLOSE} (${CAYAN}\$version${CLOSE}): "
+    echo -e "${GREEN}本次提交的范围, 建议填写版本号${CLOSE} (${CAYAN}\$version${CLOSE}): "
     read -e scope
 
-    echo ${GREEN}'请添加简短的、必要的对本次提交的描述: '${CLOSE}
+    echo -e ${GREEN}'请添加简短的、必要的对本次提交的描述: '${CLOSE}
     read -e subject
 
     body_array=()
     MAX_BODY_LINE_NUMBER=100
-    echo "${GREEN}添加一个对本次提交的完整描述(${CAYAN}支持多行输入${CLOSE}): ${CLOSE}"
+    echo -e "${GREEN}添加一个对本次提交的完整描述(${CAYAN}支持多行输入${CLOSE}): ${CLOSE}"
     for (( i = 0; i < $MAX_BODY_LINE_NUMBER; i++ ));
     do
       read -e body
@@ -109,7 +108,7 @@ function mainMessage()
       fi
     done
 
-    echo ${GREEN}"列出本次提交解决的、可以关闭的所有相关问题, ${CAYAN}建议使用关键字 refs、close: ${CLOSE}"${CLOSE}
+    echo -e ${GREEN}"列出本次提交解决的、可以关闭的所有相关问题, ${CAYAN}建议使用关键字 refs、close: ${CLOSE}"${CLOSE}
     read -e footer
 }
 
@@ -151,8 +150,8 @@ function run()
     if [[ $? -ne 0 ]]; then
       echo ""
       branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-      echo ${CAYAN}"On branch $branch"${CLOSE}
-      echo ${CAYAN}"nothing to commit, working tree clean"${CLOSE}
+      echo -e ${CAYAN}"On branch $branch"${CLOSE}
+      echo -e ${CAYAN}"nothing to commit, working tree clean"${CLOSE}
     fi
 }
 

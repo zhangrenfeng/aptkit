@@ -11,7 +11,7 @@ RESULT_CODE=0
 # 输出错误信息
 function errorMsg()
 {
-    echo ${RED}"- $*\n"{$CLOSE} >&2
+    echo -e ${RED}"- $*\n"{$CLOSE} >&2
     RESULT_CODE=1
 }
 
