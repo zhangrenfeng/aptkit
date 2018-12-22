@@ -3,8 +3,18 @@
 # commit-msg钩子有一个参数, 即保存开发者提交的commit信息的暂存文件地址, 如果commit-msg脚本返回非零,
 # Git会abort commit进程, 所以在允许commit通过之前可以使用commit-msg钩子来验证工程的状态或者commit信息.
 
+# 获取当前脚本的执行路径
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+COLOR_PATH=$(echo $DIR | sed 's/git\/hooks/common\/echo-color\/echocolorful.sh/')
+
 # echo颜色配置路径
-source ../../common/echo-color/echocolorful.sh
+source ${COLOR_PATH}
 
 RESULT_CODE=0
 

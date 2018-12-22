@@ -57,7 +57,7 @@ function commitType()
 
       if [[ $REPLY -ge 0 && $REPLY -le 11 ]]; then
         if [[ $REPLY -eq 0 ]]; then
-          echo -e ${GREEN}"退出本地提交"${CLOSE}
+          echo -e ${RED}"退出本地提交"${CLOSE}
           exit
         fi
         type=${TYPE[$REPLY-1]}
