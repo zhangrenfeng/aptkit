@@ -8,7 +8,7 @@ while [ -h "$SOURCE" ]; do
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
-COLOR_PATH=echo $DIR | sed 's/git\/command/common\/echo-color\/echocolorful.sh/'
+COLOR_PATH=$(echo $DIR | sed 's/git\/command/common\/echo-color\/echocolorful.sh/')
 echo ${COLOR_PATH}
 
 # echo颜色配置路径
