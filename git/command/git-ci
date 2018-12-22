@@ -8,10 +8,11 @@ while [ -h "$SOURCE" ]; do
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
-echo $DIR
+COLOR_PATH=echo $DIR | sed 's/git\/command/common\/echo-color\/echocolorful.sh/'
+echo ${COLOR_PATH}
 
 # echo颜色配置路径
-source ../../common/echo-color/echocolorful.sh
+source ${COLOR_PATH}
 
 # 初始化变量
 function init()
