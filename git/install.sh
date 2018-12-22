@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Program:
 #   git工具集的安装脚本, 该工具集主要提供以下功能:
 #       1. git ci命令: 用来代替git commit, 提供交互式提交操作, 用于定制统一的提交信息.
