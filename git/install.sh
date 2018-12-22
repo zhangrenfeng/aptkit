@@ -11,6 +11,7 @@
 #   1. 使用curl安装: bash -c "$(curl -fsSL https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh)"
 #   2. 使用wget安装: bash -c "$(wget https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh -O -)"
 #   3. 本地安装: 将该工程下载到本地, 然后进入该文件所在的目录, 执行命令:
+#           sudo sh -x ./install.sh install
 
 # 初始化环境变量
 function init()

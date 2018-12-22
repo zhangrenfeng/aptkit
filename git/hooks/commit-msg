@@ -82,26 +82,26 @@ do
         done
         if [[ $TYPE_NUMBER -eq ${#TYPE[@]} ]]; then
             RESULT_CODE=1
-            echo -e "${RED}Commit messgae format is incorrect!\n${CLOSE}${RED}- Does not match '<type>(<scope>): <subject>' ! \n{$CLOSE}${PURPLE}- $line\n${CLOSE}" >&2
-            printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+            echo -e "${RED}Commit messgae format is incorrect!\n${CLOSE}${RED}- Does not match '<type>(<scope>): <subject>' ! \n${CLOSE}${PURPLE}- $line\n${CLOSE}" >&2
+            echo -e "${BLUE}----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n${CLOSE}" >&2
             printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
-            printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+            echo -e "${BLUE}-------------------------------------------------------------------------------------------- \n${CLOSE}" >&2
         else
            echo $line | grep -n '): ..*$'
            if [[ "$?" -ne 0 ]]; then
               RESULT_CODE=1
               echo -e "${RED}subject line must followed by non-empty line\n${CLOSE}${PURPLE}- $line\n${CLOSE}" >&2
-              printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+              echo -e "${BLUE}----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n${CLOSE}" >&2
               printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
-              printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+              echo -e "${BLUE}-------------------------------------------------------------------------------------------- \n${CLOSE}" >&2
            fi
         fi
     elif [[ $length -gt 200 ]]; then
         RESULT_CODE=1
         echo -e "${RED}line $LINE_NUMBER exceeds 200 characters\n${CLOSE}${PURPLE}- $line${CLOSE}" >&2
-        printf -- "----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n" >&2
+        echo -e "${BLUE}----------------------------------- 请参考下面的模板进行提交 ---------------------------------- \n${CLOSE}" >&2
         printf -- "$COMMIT_MESSAGE_TEMPLATE" >&2
-        printf -- "-------------------------------------------------------------------------------------------- \n" >&2
+        echo -e "${BLUE}-------------------------------------------------------------------------------------------- \n${CLOSE}" >&2
     fi
 done < "$1"
 
