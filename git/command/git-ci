@@ -82,7 +82,7 @@ function mainMessage()
     # 获取提交的类型
     commitType
 
-    echo "${GREEN}本次提交的范围, 建议填写版本号${CLOSE} (${CAYAN}\$version${CLOSE}): "
+    echo "${GREEN}本次提交的范围, 建议填写版本号${CLOSE} (${BLUE}\$version${CLOSE}): "
     read -e scope
 
     echo ${GREEN}'请添加简短的、必要的对本次提交的描述: '${CLOSE}
@@ -90,7 +90,7 @@ function mainMessage()
 
     body_array=()
     MAX_BODY_LINE_NUMBER=100
-    echo ${GREEN}"添加一个对本次提交的完整描述${CAYAN}(支持多行输入)${CLOSE}: "${CLOSE}
+    echo "${GREEN}添加一个对本次提交的完整描述(${BLUE}支持多行输入${CLOSE}): ${CLOSE}"
     for (( i = 0; i < $MAX_BODY_LINE_NUMBER; i++ ));
     do
       read -e body
@@ -101,7 +101,7 @@ function mainMessage()
       fi
     done
 
-    echo ${GREEN}"列出本次提交解决的、可以关闭的所有相关问题, ${RED}建议使用关键字 refs、close: ${CLOSE}"${CLOSE}
+    echo ${GREEN}"列出本次提交解决的、可以关闭的所有相关问题, ${BLUE}建议使用关键字 refs、close: ${CLOSE}"${CLOSE}
     read -e footer
 }
 
