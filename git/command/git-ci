@@ -101,7 +101,7 @@ function mainMessage()
       fi
     done
 
-    echo ${GREEN}'列出本次提交解决的、可以关闭的所有相关问题, 建议使用关键字 refs、close: '${CLOSE}
+    echo ${GREEN}"列出本次提交解决的、可以关闭的所有相关问题, ${RED}建议使用关键字 refs、close: ${CLOSE}"${CLOSE}
     read -e footer
 }
 
