@@ -7,8 +7,8 @@ type(<scope>): <subject>
 # type 字段包含:
 #  1. feature:       新功能 (Introducing new features)
 #  2. fix:           修复bug (Fixing a bug)
-#  3. hotfix:        紧急热修复 (Critical hotfix)
-#  4. test:          增加测试 (Adding tests)
+#  3. revert:        撤销commit (revert commit)
+#  4. hotfix:        紧急热修复 (Critical hotfix)
 #  5. refactor:      重构 (Refactoring code)
 #  6. performance:   性能优化 (Improving performance)
 #  7. review:        代码review修改 (Updating code due to code review changes)
@@ -16,6 +16,8 @@ type(<scope>): <subject>
 #  9. configuration: 修改配置文件 (Changing configuration files)
 # 10. docs:          文档 (Writing docs)
 # 11. style:         格式化 (Improving structure / format of the code)
+# 12. test:          增加测试 (Adding tests)
+# 13. release:       发布版本 (Releasing / Version tags)
 
 # scope   用于说明 commit 影响的范围，比如数据层、控制层、视图层等等。
 # subject 是 commit 目的的简短描述，不超过50个字符

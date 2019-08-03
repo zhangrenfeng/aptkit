@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Program:
 #   git工具集的安装脚本, 该工具集主要提供以下功能:
 #       1. git ci命令: 用来代替git commit, 提供交互式提交操作, 用于定制统一的提交信息.
@@ -8,8 +8,8 @@
 #       2018/06/21  renfeng.zhang   0.1.0
 #
 # Usage:
-#   1. 使用curl安装: bash -c "$(curl -fsSL https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh)"
-#   2. 使用wget安装: bash -c "$(wget https://github.com/zhangrenfeng/aptkit/blob/master/git/install.sh -O -)"
+#   1. 使用curl安装: bash -c "$(curl -fsSL https://raw.githubusercontent.com/zhangrenfeng/aptkit/master/git/install.sh)"
+#   2. 使用wget安装: bash -c "$(wget https://raw.githubusercontent.com/zhangrenfeng/aptkit/master/git/install.sh -O -)"
 #   3. 本地安装: 将该工程下载到本地, 然后进入该文件所在的目录, 执行命令:
 #           sudo sh -x ./install.sh install
 
@@ -27,7 +27,7 @@ function init()
     TEMPLATE_FILES="git-message-template"
 
     # 用户主目录
-    USER_HOME_DIRECTORY="$(env | grep ^HOME | cut -c 6-)"
+    USER_HOME_DIRECTORY="$(env | grep '^HOME' | cut -c 6-)"
 
     # aptkit远程git仓库名称
     if [[ -z "$REPO_NAME" ]]; then
@@ -45,7 +45,7 @@ function init()
 
     # 获取命令执行路径
     PATH_NUMBER=0
-    uname -a | egrep -i linux && { echo $PATH | egrep /usr/local/sbin || PATH=$PATH:/usr/local/sbin; }
+    uname -a | egrep -i 'linux' && { echo $PATH | egrep '/usr/local/sbin' || PATH=$PATH:/usr/local/sbin; }
     for path in "${COMMAND_PATHS[@]}"; do
         if [[ "$(echo $PATH | grep "${path}")" ]]; then
             touch "$path/gitkit-tmp" > /dev/null 2>&1
@@ -98,19 +98,6 @@ function install_command()
     done
 
     ln -s "$INSTALL_PATH/git/install.sh" "$COMMAND_PATH_PREFIX/gitkit" > /dev/null 2>&1 || echo "$COMMAND_PATH_PREFIX/$REPO_NAME installed."
-}
-
-# 安装配置
-function install_config()
-{
-    echo "Install git config..."
-
-    ALIAS=`git config --list | grep 'alias.ci'`
-    if [[ -n "$ALIAS" ]]; then
-        git config --global --unset alias.ci
-    fi
-
-    git config --global commit.template "$INSTALL_PATH/$CONFIG/$TEMPLATE_FILES"
 }
 
 # 安装命令
@@ -213,7 +200,7 @@ function main()
     welcome
 
     # 获取系统信息, 并进行初始化操作
-    uname -a | egrep -i linux && { [ `id -u` -eq 0 ] && init || { echo "Please  sudo  bash installer.sh " && exit 0; } ;} || init
+    uname -a | egrep -i 'linux' && { [ `id -u` -eq 0 ] && init || { echo "Please  sudo  bash installer.sh " && exit 0; } ;} || init
 
     case $1 in
         uninstall )
