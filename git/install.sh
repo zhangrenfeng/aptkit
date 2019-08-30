@@ -36,7 +36,7 @@ function init()
 
     # aptkit远程git仓库地址
     if [[ -z "$REPO_URL" ]]; then
-        REPO_URL="https://github.com/zhangrenfeng/aptkit.git"
+        REPO_URL="https://gitlab.com/zhangrenfeng/aptkit.git"
     fi
 
     # 命令执行路径和安装路径
